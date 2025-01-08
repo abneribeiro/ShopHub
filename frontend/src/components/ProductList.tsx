@@ -1,9 +1,11 @@
+'use client'
+
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import ProductCard from './ProductCard';
-import { Input } from './ui/input';
-import { Button } from './ui/button';
+import ProductCard from '@/components/ProductCard';
+import { Input } from '@/components/ui/input';
 import { getProducts } from '../api/api';
+import { ChevronRight } from 'lucide-react';
 
 interface Product {
   id: string;
@@ -38,49 +40,63 @@ const ProductList: React.FC = () => {
   );
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-8">
+    <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="flex justify-between items-start mb-16">
         <div>
-          <h4 className="text-blue-600 font-medium mb-2">TAGLINE</h4>
-          <h2 className="text-4xl font-bold text-gray-900">Our products</h2>
+          <motion.h4
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-blue-600 text-sm font-medium tracking-wider mb-3"
+          >
+            TAGLINE
+          </motion.h4>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-5xl font-bold text-gray-900"
+          >
+            Our products
+          </motion.h2>
         </div>
         <motion.a
-          whileHover={{ scale: 1.05 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          whileHover={{ x: 5 }}
           href="/products"
-          className="text-gray-500 hover:text-gray-700"
+          className="text-gray-600 hover:text-gray-900 flex items-center gap-1 text-sm"
         >
           See all our products
+          <ChevronRight className="w-4 h-4" />
         </motion.a>
       </div>
 
-      <div className="mb-8 flex items-center">
-        <Input
-          type="text"
-          placeholder="Search products..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="mr-4 max-w-xs"
-        />
-        <Button
-          onClick={() => setSearchTerm('')}
-          variant="outline"
-        >
-          Clear
-        </Button>
+      <div className="mb-12">
+        <div className="max-w-md">
+          <Input
+            type="text"
+            placeholder="Search products..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full"
+          />
+        </div>
       </div>
 
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16"
       >
         {filteredProducts.map((product, index) => (
           <motion.div
             key={product.id}
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
+            viewport={{ once: true, margin: "-100px" }}
           >
             <ProductCard
               id={product.id}
@@ -99,4 +115,3 @@ const ProductList: React.FC = () => {
 };
 
 export default ProductList;
-

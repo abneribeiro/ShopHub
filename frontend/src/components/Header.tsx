@@ -8,9 +8,9 @@ const Header: React.FC = () => {
   const { cartItems, isLoggedIn } = useAppContext();
 
   return (
-    <header className="bg-white shadow-md">
+    <header className="relative">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <Link to="/" className="text-3xl font-bold text-primary">
+        <Link to="/" className="text-3xl font-bold text-white">
           Sneaker Shop
         </Link>
         <nav className="flex items-center space-x-4">
@@ -30,7 +30,7 @@ const Header: React.FC = () => {
             </Link>
           )}
           <Link to="/cart">
-            <Button variant="outline">
+            <Button variant="default">
               <ShoppingCart className="mr-2 h-4 w-4" />
               Cart ({cartItems.length})
             </Button>
@@ -42,4 +42,3 @@ const Header: React.FC = () => {
 };
 
 export default Header;
-
