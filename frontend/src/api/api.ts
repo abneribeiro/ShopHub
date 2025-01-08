@@ -14,6 +14,14 @@ export const getProducts = async () => {
   return response.data.map((product: { price: string; }) => ({...product, price: parseFloat(product.price)}));
 };
 
+export const getProduct = async (id: string) => {
+  const response = await api.get(`/products/${id}`);
+
+  const product = response.data;
+  product.price = parseFloat(product.price);
+  return product;
+}
+
 export const login = async (email: string, password: string) => {
   const response = await api.post('/auth/login', { email, password });
   return response.data;
