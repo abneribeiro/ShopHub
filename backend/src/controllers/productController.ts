@@ -39,3 +39,18 @@ export const createProduct = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Server Error' });
   }
 };
+
+export const deleteProduct = async (req: Request, res: Response) => {
+  try {
+    const id = Number(req.params.id);
+    if (!id) {
+      res.status(400).json({ message: 'Invalid product id' });
+      return;
+    }
+    
+    await ProductService.deleteProduct(id);
+    res.status(204).end();
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
